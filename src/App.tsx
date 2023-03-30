@@ -45,20 +45,22 @@ export default function ResponsiveDrawer(props: Props) {
       <Toolbar />
       <Divider />
       <List>
-        <ListItem key='starred' disablePadding>
-          <ListItemButton>
-            <ListItemIcon>
-              <StarIcon />
-            </ListItemIcon>
-            <ListItemText primary="Starred" />
-          </ListItemButton>
-        </ListItem>
+        <NavLink to="/">
+          <ListItem key='welcome' disablePadding>
+            <ListItemButton>
+              <ListItemIcon>
+                <StarIcon />
+              </ListItemIcon>
+              <ListItemText primary="Welcome" />
+            </ListItemButton>
+          </ListItem>          
+        </NavLink>
       </List>
       <Divider />
       <List>
         {dummyData.folders.map(folder => {
           return(
-            <NavLink to="/01">
+            <NavLink to={`/${folder.id}`}>
               <ListItem key={folder.id} disablePadding>
                 <ListItemButton>
                   <ListItemIcon>
