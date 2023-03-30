@@ -14,30 +14,19 @@ import MenuIcon from '@mui/icons-material/Menu';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
 import StarIcon from '@mui/icons-material/Star';
-import { createBrowserRouter, RouterProvider } from 'react-router-dom'
+import NotesIcon from '@mui/icons-material/Notes';
+import { createBrowserRouter, BrowserRouter, NavLink, Routes, Route } from 'react-router-dom'
+import { dummyData } from './data/dummyData';
 import Folder from './pages/Folder';
 import Note from './pages/Note';
 import Home from './pages/Home';
 
 
 
+console.log(dummyData)
+
 // All Navbar Related items below
 const drawerWidth = 240;
-
-const router = createBrowserRouter([
-  {
-    path: "/",
-    element: <Home />
-  },
-  {
-    path:"/:folder",
-    element: <Folder />
-  },
-  {
-    path:"/:folder/:note",
-    element: <Note />
-  }
-])
 
 interface Props {
   window?: () => Window;
@@ -67,7 +56,20 @@ export default function ResponsiveDrawer(props: Props) {
       </List>
       <Divider />
       <List>
-        
+        {dummyData.folders.map(folder => {
+          return(
+            <NavLink to="/01">
+              <ListItem key={folder.id} disablePadding>
+                <ListItemButton>
+                  <ListItemIcon>
+                    <NotesIcon />
+                  </ListItemIcon>
+                  <ListItemText primary={folder.title} />
+                </ListItemButton>
+              </ListItem>              
+            </NavLink>
+          )
+        })}
       </List>
     </div>
   );
@@ -75,6 +77,7 @@ export default function ResponsiveDrawer(props: Props) {
   const container = window !== undefined ? () => window().document.body : undefined;
 
   return (
+    <BrowserRouter>
     <Box sx={{ display: 'flex' }}>
       <CssBaseline />
       <AppBar
@@ -137,8 +140,13 @@ export default function ResponsiveDrawer(props: Props) {
       >
         <Toolbar />
         {/* Router Placed Here! */}
-        <RouterProvider router={router} />
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/:folder" element={<Folder />} />
+          <Route path="/:folder/:note" element={<Note />} />
+        </Routes>
       </Box>
     </Box>
+    </BrowserRouter>
   );
 }
