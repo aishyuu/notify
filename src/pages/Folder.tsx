@@ -19,7 +19,7 @@ export default function Folder() {
             <div className='p-2'>
                 {currentData?.notes.map(note => {
                     return(
-                        <NavLink to={`/${currentData?.id}/${note.id}`}>
+                        <NavLink to={`/${currentData?.id}/${note.id}`} key={`${currentData?.id}/${note.id}`}>
                             <div className="mb-4 p-3 border border-blue-300 rounded-xl hover:bg-blue-100 ">
                                 <span>{note.title}</span>
                             </div>

@@ -21,7 +21,11 @@ import Folder from './pages/Folder';
 import Note from './pages/Note';
 import Home from './pages/Home';
 
-
+if(localStorage.getItem('data') == null) {
+  console.log('No Data!')
+} else {
+  console.log('Data found!')
+}
 
 console.log(dummyData)
 
@@ -60,7 +64,7 @@ export default function ResponsiveDrawer(props: Props) {
       <List>
         {dummyData.folders.map(folder => {
           return(
-            <NavLink to={`/${folder.id}`}>
+            <NavLink to={`/${folder.id}`} key={`/${folder.id}`}>
               <ListItem key={folder.id} disablePadding>
                 <ListItemButton>
                   <ListItemIcon>
