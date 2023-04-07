@@ -20,14 +20,13 @@ import { dummyData } from './data/dummyData';
 import Folder from './pages/Folder';
 import Note from './pages/Note';
 import Home from './pages/Home';
+import { AllType } from './types/All.types';
 
-if(localStorage.getItem('data') == null) {
-  console.log('No Data!')
-} else {
-  console.log('Data found!')
+if (localStorage.getItem("localUserData") === null) {
+  localStorage.setItem('localUserData', JSON.stringify(dummyData))
 }
 
-console.log(dummyData)
+let allUserData = JSON.parse(localStorage.getItem("localUserData")!)
 
 // All Navbar Related items below
 const drawerWidth = 240;
@@ -62,7 +61,7 @@ export default function ResponsiveDrawer(props: Props) {
       </List>
       <Divider />
       <List>
-        {dummyData.folders.map(folder => {
+        {allUserData.folders.map(folder => {
           return(
             <NavLink to={`/${folder.id}`} key={`/${folder.id}`}>
               <ListItem key={folder.id} disablePadding>

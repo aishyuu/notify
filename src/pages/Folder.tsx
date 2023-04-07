@@ -1,23 +1,29 @@
 import React from 'react'
 import { NavLink, useParams } from 'react-router-dom'
 import { dummyData } from '../data/dummyData'
+import { NoteType, FolderType } from '../types/All.types'
+import { AllType } from '../types/All.types'
 
 export default function Folder() {
     const { folder } = useParams()
-    let currentData = dummyData.folders.find(x => x.id === parseInt(folder!))
-    
+    let currentData = JSON.parse(localStorage.getItem("localUserData")!).folders.find((x:FolderType) => x.id === parseInt(folder!))
+    let allData : AllType = JSON.parse(localStorage.getItem("localUserData")!)
+
+    console.log(allData)
+
     const [folderName, setFolderName] = React.useState(currentData?.title)
 
     function handleChange(folderTitle : string) {
         setFolderName(folderTitle);
-        currentData!.title = folderTitle;
+        allData.folders.find((x:FolderType) => x.id === parseInt(folder!))!.title = folderTitle
+        localStorage.setItem("localUserData", JSON.stringify(allData))
     }
 
     return(
         <div>
             <input className="text-4xl mb-6" type="text" id="FolderTitle" value={currentData?.title} onChange={newTitle => handleChange(newTitle.target.value)}/>
             <div className='p-2'>
-                {currentData?.notes.map(note => {
+                {currentData?.notes.map((note: NoteType) => {
                     return(
                         <NavLink to={`/${currentData?.id}/${note.id}`} key={`${currentData?.id}/${note.id}`}>
                             <div className="mb-4 p-3 border border-blue-300 rounded-xl hover:bg-blue-100 ">
