@@ -4,12 +4,10 @@ import { dummyData } from '../data/dummyData'
 import { NoteType, FolderType } from '../types/All.types'
 import { AllType } from '../types/All.types'
 
-export default function Folder() {
+export default function Folder(props) {
     const { folder } = useParams()
     let currentData = JSON.parse(localStorage.getItem("localUserData")!).folders.find((x:FolderType) => x.id === parseInt(folder!))
-    let allData : AllType = JSON.parse(localStorage.getItem("localUserData")!)
-
-    console.log(allData)
+    let allData : AllType = props.allData
 
     const [folderName, setFolderName] = React.useState(currentData?.title)
 

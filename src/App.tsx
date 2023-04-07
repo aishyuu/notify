@@ -26,8 +26,6 @@ if (localStorage.getItem("localUserData") === null) {
   localStorage.setItem('localUserData', JSON.stringify(dummyData))
 }
 
-let allUserData = JSON.parse(localStorage.getItem("localUserData")!)
-
 // All Navbar Related items below
 const drawerWidth = 240;
 
@@ -38,6 +36,7 @@ interface Props {
 export default function ResponsiveDrawer(props: Props) {
   const { window } = props;
   const [mobileOpen, setMobileOpen] = React.useState(false);
+  const [allUserData, setAllUserData] = React.useState(JSON.parse(localStorage.getItem("localUserData")!))
 
   const handleDrawerToggle = () => {
     setMobileOpen(!mobileOpen);
@@ -147,7 +146,7 @@ export default function ResponsiveDrawer(props: Props) {
         {/* Router Placed Here! */}
         <Routes>
           <Route path="/" element={<Home />} />
-          <Route path="/:folder" element={<Folder />} />
+          <Route path="/:folder" element={<Folder allData={allUserData} />} />
           <Route path="/:folder/:note" element={<Note />} />
         </Routes>
       </Box>
