@@ -20,7 +20,7 @@ import { dummyData } from './data/dummyData';
 import Folder from './pages/Folder';
 import Note from './pages/Note';
 import Home from './pages/Home';
-import { AllType } from './types/All.types';
+import { AllType, FolderType } from './types/All.types';
 
 if (localStorage.getItem("localUserData") === null) {
   localStorage.setItem('localUserData', JSON.stringify(dummyData))
@@ -60,7 +60,7 @@ export default function ResponsiveDrawer(props: Props) {
       </List>
       <Divider />
       <List>
-        {allUserData.folders.map(folder => {
+        {allUserData.folders.map((folder : FolderType) => {
           return(
             <NavLink to={`/${folder.id}`} key={`/${folder.id}`}>
               <ListItem key={folder.id} disablePadding>
@@ -147,7 +147,7 @@ export default function ResponsiveDrawer(props: Props) {
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/:folder" element={<Folder allData={allUserData} />} />
-          <Route path="/:folder/:note" element={<Note />} />
+          <Route path="/:folder/:note" element={<Note allData={allUserData} />} />
         </Routes>
       </Box>
     </Box>

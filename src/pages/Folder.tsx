@@ -24,8 +24,11 @@ export default function Folder(props) {
                 {currentData?.notes.map((note: NoteType) => {
                     return(
                         <NavLink to={`/${currentData?.id}/${note.id}`} key={`${currentData?.id}/${note.id}`}>
-                            <div className="mb-4 p-3 border border-blue-300 rounded-xl hover:bg-blue-100 ">
+                            <div className="mb-4 p-3 border border-blue-300 rounded-xl hover:bg-blue-100 flex">
                                 <span>{note.title}</span>
+                                <div className="ml-auto border border-red-400 bg-red-300 hover:bg-red-500">
+                                    <span>Delete</span>
+                                </div>
                             </div>
                         </NavLink>
                         

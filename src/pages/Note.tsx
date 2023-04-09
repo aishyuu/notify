@@ -1,19 +1,23 @@
 import { useParams } from "react-router-dom"
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import { NavLink } from "react-router-dom";
-import { dummyData } from "../data/dummyData";
+import { AllType, FolderType, NoteType } from "../types/All.types";
 import React from "react";
 
-export default function Note() {
+export default function Note(props) {
     const { folder, note } = useParams()
 
-    let currentData = dummyData.folders.find(x => x.id === parseInt(folder!))?.notes.find(y => y.id === parseInt(note!))
+    let allData : AllType = props.allData
+    console.log(allData)
+
+    let currentData = allData.folders.find(x => x.id === parseInt(folder!))?.notes.find(y => y.id === parseInt(note!))
 
     const [noteTitle, setNoteTitle] = React.useState(currentData?.title)
     
     function handleTitleChange(newTitle : string) {
         setNoteTitle(newTitle)
         currentData!.title = newTitle
+        localStorage.setItem("localUserData", JSON.stringify(allData))
     }
 
     return(
