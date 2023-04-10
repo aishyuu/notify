@@ -8,7 +8,6 @@ export default function Note(props) {
     const { folder, note } = useParams()
 
     let allData : AllType = props.allData
-    console.log(allData)
 
     let currentData = allData.folders.find(x => x.id === parseInt(folder!))?.notes.find(y => y.id === parseInt(note!))
 
