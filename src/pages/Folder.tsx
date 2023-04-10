@@ -27,8 +27,22 @@ export default function Folder(props) {
     }
 
     // Function that deletes a note
-    function handleDelete() {
-        
+    function handleDelete(noteId : number) {
+        /*
+            Find the id of the note we're trying to delete
+            Locate the index of the array
+            Delete that index (probably with filter)
+            Save all data to local storage
+            Refresh the page <- Need to see if it updates
+        */
+        console.log(noteId)
+        const filteredData = allData.folders.find((x:FolderType) => x.id === parseInt(folder!))!.notes.filter(function (note) {
+            return note.id !== noteId;
+        })
+        allData.folders.find((x: FolderType) => x.id === parseInt(folder!))!.notes = filteredData
+
+        localStorage.setItem("localUserData", JSON.stringify(allData))
+        window.location.reload();
     }
 
     // Function that adds a note
@@ -65,7 +79,7 @@ export default function Folder(props) {
                                     <span>{note.title}</span>
                                 </div>
                             </NavLink>
-                            <button onClick={handleDelete} className="ml-auto border border-red-400 bg-red-300 hover:bg-red-500 rounded-md py-1 px-2">
+                            <button onClick={() => handleDelete(note.id)} className="ml-auto border border-red-400 bg-red-300 hover:bg-red-500 rounded-md py-1 px-2">
                                 <span>Delete</span>
                             </button>
                         </div>
