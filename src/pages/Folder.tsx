@@ -9,8 +9,8 @@ export default function Folder(props) {
     const { folder } = useParams()
 
     // Get current folder by finding the object that contains id of whatever our link says
-    let currentData = JSON.parse(localStorage.getItem("localUserData")!).folders.find((x:FolderType) => x.id === parseInt(folder!))
     let allData : AllType = props.allData
+    let currentData = allData.folders.find((x:FolderType) => x.id === parseInt(folder!))
 
     const [folderName, setFolderName] = React.useState(currentData?.title)
 
@@ -22,7 +22,7 @@ export default function Folder(props) {
             Save the entire object to local storage
         */
         setFolderName(folderTitle);
-        allData.folders.find((x:FolderType) => x.id === parseInt(folder!))!.title = folderTitle
+        currentData!.title = folderTitle
         localStorage.setItem("localUserData", JSON.stringify(allData))
     }
 
@@ -36,10 +36,10 @@ export default function Folder(props) {
             Refresh the page <- Need to see if it updates
         */
         console.log(noteId)
-        const filteredData = allData.folders.find((x:FolderType) => x.id === parseInt(folder!))!.notes.filter(function (note) {
+        const filteredData = currentData!.notes.filter(function (note) {
             return note.id !== noteId;
         })
-        allData.folders.find((x: FolderType) => x.id === parseInt(folder!))!.notes = filteredData
+        currentData!.notes = filteredData
 
         localStorage.setItem("localUserData", JSON.stringify(allData))
         window.location.reload();
@@ -59,7 +59,7 @@ export default function Folder(props) {
             title: 'New Note',
             text: 'New Note Starts Here'
         }
-        allData.folders.find((x:FolderType) => x.id === parseInt(folder!))!.notes.push(newNote)
+        currentData!.notes.push(newNote)
         localStorage.setItem("localUserData", JSON.stringify(allData))
         window.location.reload();
     }
@@ -71,7 +71,7 @@ export default function Folder(props) {
                 New Note
             </button>
             <div className='p-2'>
-                {currentData.notes.map((note: NoteType) => {
+                {currentData!.notes.map((note: NoteType) => {
                     return(
                         <div className="mb-6" key={`${currentData?.id}/${note.id}`}>
                             <NavLink to={`/${currentData?.id}/${note.id}`} >
