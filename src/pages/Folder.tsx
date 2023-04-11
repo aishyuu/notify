@@ -8,7 +8,7 @@ export default function Folder(props) {
     // Get folder ID (id is attatched to the link -> '/{folder}')
     const { folder } = useParams()
 
-    //Get current folder by finding the object that contains id of whatever our link says
+    // Get current folder by finding the object that contains id of whatever our link says
     let currentData = JSON.parse(localStorage.getItem("localUserData")!).folders.find((x:FolderType) => x.id === parseInt(folder!))
     let allData : AllType = props.allData
 
