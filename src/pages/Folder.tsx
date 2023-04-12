@@ -5,6 +5,7 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import Button from '@mui/material/Button';
 import DialogTitle from '@mui/material/DialogTitle';
 import Dialog from '@mui/material/Dialog';
+import { Card } from '@mui/material';
 import { AllType } from '../types/All.types'
 
 function SimpleDialog(props : any) {
@@ -119,10 +120,10 @@ export default function Folder(props : any) {
     return(
         <div>
             <input className="text-4xl mb-2" type="text" id="FolderTitle" value={currentData?.title} onChange={newTitle => handleChange(newTitle.target.value)}/>
-            <button className="absolute bottom-20 right-10 mb-6 px-5 py-4 rounded-full hover:bg-red-300 text-2xl bg-red-400 text-white" onClick={handleClickOpen}>
+            <button className="fixed bottom-20 right-10 mb-6 px-5 py-4 rounded-full hover:bg-red-300 text-2xl bg-red-400 text-white" onClick={handleClickOpen}>
                 <DeleteIcon />
             </button>
-            <button className="absolute bottom-0 right-10 mb-6 px-6 py-4 rounded-full hover:bg-gray-300 text-2xl bg-blue-400 text-white" onClick={handleAdd}>
+            <button className="fixed bottom-0 right-10 mb-6 px-6 py-4 rounded-full hover:bg-gray-300 text-2xl bg-blue-400 text-white" onClick={handleAdd}>
                 +
             </button>
             <SimpleDialog
@@ -130,16 +131,19 @@ export default function Folder(props : any) {
                 onClose={handleClose}
                 allData={props.allData}
             />
-            <div className='p-2'>
+            <div className='p-2 flex flex-wrap gap-8'>
                 {currentData!.notes.map((note: NoteType) => {
                     return(
-                        <div className="mb-6" key={`${currentData?.id}/${note.id}`}>
+                        <div className="mb-6 w-60 h-48 border border-gray-400 rounded-lg" 
+                        key={`${currentData?.id}/${note.id}`}
+                        >
                             <NavLink to={`/${currentData?.id}/${note.id}`} >
-                                <div className="p-3 border border-blue-300 rounded-xl hover:bg-blue-100 flex">
-                                    <span>{note.title}</span>
+                                <div className="border-b-2 border-gray-400 p-2 h-32 bg-blue-100 hover:bg-blue-200 rounded-t-lg">
+                                    <span className="text-2xl block mb-3">{note.title}</span>
+                                    <span className="text-sm">{`${note.text.substring(0, 70)}${note.text.length > 85 ? '...' : ''}`}</span>
                                 </div>
                             </NavLink>
-                            <button onClick={() => handleDelete(note.id)} className="ml-auto border border-red-400 bg-red-300 hover:bg-red-500 rounded-md py-1 px-2">
+                            <button onClick={() => handleDelete(note.id)} className="border border-red-400 bg-red-300 hover:bg-red-500 rounded-md py-1 px-2 mt-4 ml-4">
                                 <span>Delete</span>
                             </button>
                         </div>

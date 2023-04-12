@@ -18,6 +18,8 @@ export default function Introduction() {
                     <span>Source Code</span>
                 </Button>
             </a>
+            <span className="block mt-6 text-sm italic">Made with love by Aishyuu</span>
+            <span className="block mt-72 text-sm italic">Disclaimer: This all saves in local storage (Will work on that for 2.0)</span>
         </div>
     )
 }

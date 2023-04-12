@@ -33,7 +33,7 @@ export default function Note(props) {
 
     return(
         <div>
-            <NavLink to={`/${folder}`} className="block">
+            <NavLink to={`/${folder}`} className="block w-4">
                 <ArrowBackIcon />
             </NavLink>
             <div className="flex float-right">
