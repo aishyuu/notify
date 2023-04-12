@@ -1,10 +1,52 @@
 import React from 'react'
-import { NavLink, useParams } from 'react-router-dom'
-import { dummyData } from '../data/dummyData'
+import { NavLink, useParams, useNavigate } from 'react-router-dom'
 import { NoteType, FolderType } from '../types/All.types'
+import DeleteIcon from '@mui/icons-material/Delete';
+import Button from '@mui/material/Button';
+import DialogTitle from '@mui/material/DialogTitle';
+import Dialog from '@mui/material/Dialog';
 import { AllType } from '../types/All.types'
 
-export default function Folder(props) {
+function SimpleDialog(props : any) {
+    const { onClose, selectedValue, open } = props;
+    const { folder } = useParams()
+    const navigate = useNavigate();
+
+    let allData = props.allData
+    let filteredData = allData.folders.filter(function (indivFolder) {
+        return indivFolder.id !== parseInt(folder!)
+    })
+  
+    const handleClose = () => {
+      onClose(selectedValue);
+    };
+  
+    const handleListItemClick = (value: string) => {
+      onClose(value);
+    };
+
+    function handleDelete() {
+        allData.folders = filteredData
+        localStorage.setItem("localUserData", JSON.stringify(allData));
+        navigate("/");
+    }
+  
+    return (
+      <Dialog onClose={handleClose} open={open} fullWidth='sm'>
+        <DialogTitle>Delete Folder?</DialogTitle>
+        <div className="flex self-center gap-8 pb-6">
+            <Button variant="outlined" onClick={handleClose}>
+                Cancel
+            </Button>
+            <Button variant="outlined" color="error" onClick={handleDelete}>
+                Delete
+            </Button>
+        </div>
+      </Dialog>
+    );
+  }
+
+export default function Folder(props : any) {
     // Get folder ID (id is attatched to the link -> '/{folder}')
     const { folder } = useParams()
 
@@ -13,6 +55,16 @@ export default function Folder(props) {
     let currentData = allData.folders.find((x:FolderType) => x.id === parseInt(folder!))
 
     const [folderName, setFolderName] = React.useState(currentData?.title)
+
+    const [open, setOpen] = React.useState(false);
+
+    const handleClickOpen = () => {
+        setOpen(true);
+    };
+
+    const handleClose = (value: string) => {
+        setOpen(false);
+    };
 
     // Function that changes the title
     function handleChange(folderTitle : string) {
@@ -67,9 +119,17 @@ export default function Folder(props) {
     return(
         <div>
             <input className="text-4xl mb-2" type="text" id="FolderTitle" value={currentData?.title} onChange={newTitle => handleChange(newTitle.target.value)}/>
-            <button className="block mb-6 border border-gray-500 px-2 py-1 rounded-xl hover:bg-gray-300" onClick={handleAdd}>
-                New Note
+            <button className="absolute bottom-20 right-10 mb-6 px-5 py-4 rounded-full hover:bg-red-300 text-2xl bg-red-400 text-white" onClick={handleClickOpen}>
+                <DeleteIcon />
             </button>
+            <button className="absolute bottom-0 right-10 mb-6 px-6 py-4 rounded-full hover:bg-gray-300 text-2xl bg-blue-400 text-white" onClick={handleAdd}>
+                +
+            </button>
+            <SimpleDialog
+                open={open}
+                onClose={handleClose}
+                allData={props.allData}
+            />
             <div className='p-2'>
                 {currentData!.notes.map((note: NoteType) => {
                     return(

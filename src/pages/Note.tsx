@@ -49,6 +49,7 @@ export default function Note(props) {
                 preview={viewMarkdown ? 'preview' : 'edit'}
                 value={noteContent}
                 onChange={(newText) => handleContentChange(newText!)}
+                height={750}
             />
         </div>
     )

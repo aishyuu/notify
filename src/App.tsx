@@ -15,6 +15,7 @@ import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
 import StarIcon from '@mui/icons-material/Star';
 import NotesIcon from '@mui/icons-material/Notes';
+import AddIcon from '@mui/icons-material/Add';
 import { createBrowserRouter, BrowserRouter, NavLink, Routes, Route } from 'react-router-dom'
 import { dummyData } from './data/dummyData';
 import Folder from './pages/Folder';
@@ -41,6 +42,27 @@ export default function ResponsiveDrawer(props: Props) {
   const handleDrawerToggle = () => {
     setMobileOpen(!mobileOpen);
   };
+
+  function handleAddFolder() {
+    /* 
+      Get data
+      Add new folder in data
+      Save the data to local storage
+      Update react state
+    */
+    let data : AllType = JSON.parse(localStorage.getItem("localUserData")!)
+    const newFolder : FolderType = {
+      id: Math.floor(Math.random() * 1000000),
+      title: 'New Notes',
+      notes: [
+
+      ]
+    }
+
+    data.folders.push(newFolder)
+    localStorage.setItem('localUserData', JSON.stringify(data))
+    setAllUserData(data)
+  }
 
   const drawer = (
     <div>
@@ -74,6 +96,14 @@ export default function ResponsiveDrawer(props: Props) {
             </NavLink>
           )
         })}
+        <ListItem>
+          <ListItemButton onClick={handleAddFolder}>
+            <ListItemIcon>
+              <AddIcon />
+            </ListItemIcon>
+            <ListItemText primary="Add Folder" />
+          </ListItemButton>
+        </ListItem>
       </List>
     </div>
   );
