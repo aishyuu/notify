@@ -14,7 +14,7 @@ function SimpleDialog(props : any) {
     const navigate = useNavigate();
 
     let allData = props.allData
-    let filteredData = allData.folders.filter(function (indivFolder) {
+    let filteredData = allData.folders.filter(function (indivFolder : any) {
         return indivFolder.id !== parseInt(folder!)
     })
   
@@ -33,7 +33,7 @@ function SimpleDialog(props : any) {
     }
   
     return (
-      <Dialog onClose={handleClose} open={open} fullWidth='sm'>
+      <Dialog onClose={handleClose} open={open} fullWidth={true}>
         <DialogTitle>Delete Folder?</DialogTitle>
         <div className="flex self-center gap-8 pb-6">
             <Button variant="outlined" onClick={handleClose}>

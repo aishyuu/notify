@@ -6,7 +6,7 @@ import { Switch } from "@mui/material";
 import MDEditor from "@uiw/react-md-editor";
 import React from "react";
 
-export default function Note(props) {
+export default function Note(props : any) {
     const { folder, note } = useParams()
 
     const [viewMarkdown, setViewMarkdown] = React.useState(true)
