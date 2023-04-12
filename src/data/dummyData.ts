@@ -20,7 +20,7 @@ export const dummyData : AllType = {
       },
       {
         id: 2,
-        title: 'Calculus',
+        title: 'More Notes',
         notes: [
           {
             id: 1,
